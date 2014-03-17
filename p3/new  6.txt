@@ -1,0 +1,6 @@
+
+let sum ( (a,b), c) = ( a+c, b+c)
+
+let x = sum ( (1, 2), 3 )
+
+print_int x

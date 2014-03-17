@@ -1,0 +1,542 @@
+<!--#include virtual="header.html" -->
+
+<body>
+
+<h1 class="title">Project 3 - Sliding Puzzle </h1>
+<center>
+Due 11:59pm Wed, Oct 23rd, 2013
+</center>
+
+<p>
+
+</center>
+
+<p>
+</p><h2>Introduction</h2>
+
+<p>
+For this project you will need to implement a number of 
+functions in OCaml that together can be used to find 
+solutions for a sliding puzzle.  This project will provide
+experience dealing with recursion, lists, and higher order
+functions, as well OCaml's type inference system.
+
+</p><h2>Sliding Puzzle</h2>
+<p>
+A <a href="http://en.wikipedia.org/wiki/Fifteen_puzzle">sliding puzzle</a> 
+(or n-puzzle) consists of a frame of 
+numbered square tiles in random order with one tile missing.
+Tiles adjacent to the space may be moved into the space,
+rearranging tiles until the tiles are all in order.
+<p>
+For this project we represent the tiles in a sliding puzzle
+as numbers in a list, with 0 as the space.  We'll assume
+all puzzles are square.  For this project we'll assume 
+a puzzle is solved when the space is in the top left 
+corner of the puzzle, with tile numbers sorted in 
+order from left to right and top to bottom.
+<p>
+Positions in the 2-D puzzle are
+linearized to a 1-D list so that rows are contiguous (row-major). 
+For instance, the following solved 3x3 puzzle is linearized 
+as [0;1;2;3;4;5;6;7;8].
+
+<p>
+<table border="1">
+<tr>
+<td> 
+<td>1
+<td>2
+<tr>
+<td>3
+<td>4
+<td>5
+<tr>
+<td>6
+<td>7
+<td>8
+</table>
+
+<p>
+In other words, the x,y coordinates of a position in the n-puzzle are assigned as follows:
+
+<p>
+<table>
+<tr>
+
+<td>
+<table border="1">
+<tr>
+<td>(0,0)
+<td>(0,1)
+<td>(0,2)
+<tr>
+<td>(1,0)
+<td>(1,1)
+<td>(1,2)
+<tr>
+<td>(2,0)
+<td>(2,1)
+<td>(2,2)
+</table>
+</td>
+
+<td>
+=
+</td>
+
+<td>
+<table border="1">
+<tr>
+<td>(0,0)
+<td>(0,1)
+<td>(0,2)
+<td>(1,0)
+<td>(1,1)
+<td>(1,2)
+<td>(2,0)
+<td>(2,1)
+<td>(2,2)
+</table>
+</td>
+
+<td>
+=
+</td>
+
+<td>
+<table border="1">
+<tr>
+<td>0
+<td>1
+<td>2
+<td>3
+<td>4
+<td>5
+<td>6
+<td>7
+<td>8
+</table>
+</td>
+</tr>
+</table>
+
+<p><b>Importantly</b>: Notice that the origin (0,0) is in the upper
+  left, and the coordinate pair (x,y) indicates the position x
+  moves <i>down</i> and y moves to the <i>right</i> of the origin.  If
+  you don't follow this arrangement, some of your position functions
+  below will produce the wrong answers.</p>
+
+</p><h2>Getting Started</h2>
+
+Download the following archive file <a href="p3.zip">p3.zip</a>
+and extract its contents.
+<p>
+Along with files used to make direct submissions to the
+submit server (submit.jar, .submit, submit.rb), you will
+find the following project files:
+</p><ul>
+<li>Your OCaml program - <a href="puzzle.ml">puzzle.ml</a>
+<li>Test utilities - <a href="testUtils.ml">testUtils.ml</a>
+</li><li>Public tests
+<ul>
+<li> <a href="testRecursion1.ml">testRecursion1.ml</a>
+<li> <a href="testRecursion2.ml">testRecursion2.ml</a>
+<li> <a href="testHigherOrder1.ml">testHigherOrder1.ml</a>
+<li> <a href="testPuzzle1.ml">testPuzzle1.ml</a>
+<li> <a href="testPuzzle2.ml">testPuzzle2.ml</a>
+<li> <a href="testSolve1.ml">testSolve1.ml</a>
+</li></ul>
+</li><li>Expected outputs for public tests
+<ul>
+<li> <a href="testRecursion1.out">testRecursion1.out</a>
+<li> <a href="testRecursion2.out">testRecursion2.out</a>
+<li> <a href="testHigherOrder1.out">testHigherOrder1.out</a>
+<li> <a href="testPuzzle1.out">testPuzzle1.out</a>
+<li> <a href="testPuzzle2.out">testPuzzle2.out</a>
+<li> <a href="testSolve1.out">testSolve1.out</a>
+</li></ul>
+<li>Ruby script to run public tests- <a href="goTest.rb">goTest.rb</a>
+</li></ul>
+<p>
+
+You may use functions from testUtils.ml for printing debugging
+messages, but do not modify the file.  Your actual submission
+should not print any output.
+
+<p>
+
+To test your utility functions and puzzle solver implementation, 
+you can execute the public tests from the command line by typing 
+commands like <tt>ocaml testRecursion1.ml</tt>.
+
+<p>
+
+The puzzle.ml file you downloaded contains a number of 
+utility functions, and comments describing the functions
+you are required to implement.  
+
+<p>
+
+Note that you must implement your functions with the exact
+parameter and return type specified, or else the submit server
+tests will fail.
+
+<p>
+
+In general just assume your code will be invoked only for 
+legal inputs (though note "index (x,v)" not finding v in x 
+and returning -1 is considered to be legal).  We haven't 
+reached how OCaml can throw exceptions yet.
+
+<p>
+
+For this project the only OCaml libraries you are allowed to
+use are those defined in the 
+<a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/Pervasives.html">Pervasives</a> 
+module loaded by default.  In fact, you will need at least a couple of functions
+found here.
+You are not allowed to use library functions found in any 
+other modules, particularly List and Array.
+
+<p>
+
+<h2>Part 1: Recursion </h2>
+
+Write the following recursive functions:
+<p>
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> get_val (x, n) 
+<td> int list * int -> int 
+<td> element of list x at index n (indexes start at 0)
+<br> -1 if n is outside the bounds of the list
+<td> get_val ([5;6;7;3],1) => 6 
+</tr>
+
+<tr>
+<td> get_vals (x, y)
+<td> int list * int list -> int list
+<td> list of elements of list x at indexes in list y, 
+<br> [] if any indexes in y are outside the bounds of x
+<br> elements must be returned in order listed in y
+<td> get_vals ([5;6;7;3],[2;0]) => [7;5] 
+</tr>
+
+<tr>
+<td> set_n (x, n, v) 
+<td> 'a list * int * 'a -> 'a list
+<td> list produced by setting n'th element of list x to value v
+<br> no effect if n is outside the bounds of the list 
+<td> set_n ([5;6;7;3],1,9) =>  [5;9;7;3]
+</tr>
+
+<tr>
+<td> list_swap_val (b, u, v) 
+<td> 'a list * 'a * 'a -> 'a list
+<td> list b with values u,v swapped
+<br> change value of multiple occurrences of u and/or v, if found
+<br> change value for u even if v not found in list, and vice versa 
+<td> list_swap_val ([5;6;7;3],7,5) => [7;6;5;3]
+<br> list_swap_val ([5;6;3],7,5) => [7;6;3]
+</tr>
+
+<tr>
+<td> index (x, v)
+<td> 'a list * 'a -> int
+<td> index of value v in list x (indexes start at 0)
+<br> -1 if not found
+<td> index ([5;6;7;3],7) => 2
+</tr>
+
+<tr>
+<td> uniq x
+<td> 'a list -> 'a list
+<td> list of uniq elements in x
+<br> order of unique elements does not matter
+<td> uniq [5;6;5;3] => [6;5;3]
+</tr>
+
+<tr>
+<td> find_new (x, y)
+<td> 'a list * 'a list -> 'a list
+<td> list of members of list x not found in list y
+<br> maintain relative order of elements in result
+<td> find_new ([4;3;7],[5;6;5;3]) => [4;7]
+</tr>
+
+<tr>
+<td> is_sorted x
+<td> 'a list -> bool
+<td> true if elements in x are in sorted order, false otherwise
+<br> return true for [] 
+<td> is_sorted ([5;5;7;9]) => true
+</tr>
+</table>
+<p><i>Hint</i>: The OCaml comparison functions (=,&lt;=,&gt;=,&lt;, and
+  &gt;) are polymorphic, so you can give them any two
+  arguments of the same type.</p>
+<p><i>Hint</i>: For a couple of the functions above, you might find it
+  useful to write a helper function mem with type 'a * 'a list ->
+  bool, such that mem (x,l) returns true if and only if x is contained
+  in list l (false otherwise).</p>
+
+<h2>Part 2: Higher order functions </h2>
+
+Write the following functions using the versions of map and/or fold
+provided in puzzle.ml:
+
+<p>
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> grow_lists (x, y)
+<td> 'a list * 'a list -> 'a list list
+<td> a list of lists, where each element of x is prepended to y
+<br> resulting lists must be in same order as in x
+<td> grow_lists ([1;2], [3;4]) => [[1;3;4]; [2;3;4]]
+</tr>
+
+<tr>
+<td> concat_lists x
+<td> 'a list list -> 'a list
+<td> a list consisting of the lists in x concatenated together
+<br> note just top level of lists is concatenated, unlike List.flatten
+<td> concat_lists [[1;2];[7];[5;4;3]] => [1;2;7;5;4;3]
+<br> concat_lists [[[1;2;3];[2]];[[7]]] => [[1;2;3];[2];[7]]
+</tr>
+
+</table>
+
+<h2>Part 3: Puzzle functions </h2>
+
+<p>
+Write the following helper functions for the puzzle solver:
+<p>
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> find_board_size b
+<td> 'a list -> int
+<td> size (that is, the length/width of a side) of board b represented as a list 
+<td> find_board_size [1;0;2;3;4;5;6;7;8] => 3
+</tr>
+
+<tr>
+<td> pos_of_xy (x, y, s)
+<td> int * int * int -> int
+<td> index of x, y coordinate in a list representing a board of size s
+<br> return -1 if x or y is out of bounds (i.e., less than 0 or
+greater than s-1)
+<td> pos_of_xy (1, 2, 3) => 5
+</tr>
+
+<tr>
+<td> xy_of_pos (p, s)
+<td> int * int -> int * int
+<td> x, y coordinate of index p in a list representing a board of size s
+<br> may assume p is a legal position between 0..s-1
+<td> xy_of_pos (5, 3) => (1, 2)
+</tr>
+
+<tr>
+<td> move_pos b
+<td> int list -> int list
+<td> list of positions in board that can move to space in board
+<br> positions must be in sorted order, from smallest to largest
+<td> move_pos [0;1;2;3;4;5;6;7;8] => [1;3]
+</tr>
+
+<tr>
+<td> make_move (b,x)
+<td> int list * int -> int list
+<td> configuration of board after moving number at position x to space
+<br> may assume position x is adjacent to space
+<td> make_move ([0;1;4;5;2;3;6;7;8], 3) =>  <br> [5;1;4;0;2;3;6;7;8]
+</tr>
+
+<tr>
+<td> make_moves b
+<td> int list -> int list list
+<td> boards produced after all possible 1-step moves for board b
+<br> boards must be in sorted order, with space in smallest position to largest
+<td> make_moves [0;1;2;3;4;5;6;7;8] => <br>[[1;0;2;3;4;5;6;7;8];[3;1;2;0;4;5;6;7;8]]
+</tr>
+
+</table>
+
+<h2>Part 4: Puzzle solver </h2>
+
+<p>
+Write the following function for solving a sliding puzzle.
+Your solution must be efficient enough to solve 4x4 puzzles 
+under 10 moves within 3 seconds on the submit server (we
+will also test it on larger puzzles/solutions). 
+<p>
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> solve_board (b,n)
+<td> int list * int -> int list list list
+<td> return all <i>solutions</i> (see below) of board b
+<br> having length n or less, or [] if none exist.
+<br> The order of possible solutions does not matter
+<td> solve_board ([1;2;0;3;4;5;6;7;8],2) =><br>
+[[[0;1;2;3;4;5;6;7;8];[1;0;2;3;4;5;6;7;8];[1;2;0;3;4;5;6;7;8]]]
+</tr>
+
+</table>
+
+<p>A <i>solution</i> to solve_board is a list of boards produced by
+moves starting from b until the solved board is reached.  The list is
+in reverse order: solved board first, b last.  The length l of each
+solution is the number of moves (i.e., one less than the length of the
+list that represents the solution).  Solutions are not permitted to
+contain the same intermediate board twice.  For example,
+[[[0;1;2;3;4;5;6;7;8];[1;0;2;3;4;5;6;7;8];[0;1;2;3;4;5;6;7;8];[1;0;2;3;4;5;6;7;8];[1;2;0;3;4;5;6;7;8]]]
+is not a legal length-4 solution to [1;2;0;3;4;5;6;7;8].</p>
+
+<p>
+<i>Hints</i> for solve_board: as you are required to produce <i>all</i>
+solutions up to length n, you are essentially doing an exhaustive
+search with a bit of smarts to prune out paths containing duplicate
+boards.  That is, at each step you will want to enumerate all possible
+boards produced by legal moves from the current board of each path
+produced by prior steps.  You will prune out paths that would be
+produced by repeating a previous board position.  You should be making
+good use of the functions you have already defined above.  If your
+solution is not using many of these functions, you are doing too much
+work!</p>
+
+<h2>Submission</h2>
+
+You can submit your project in two ways:
+
+<ul>
+<li>
+Submit your puzzle.ml file directly to the 
+<a href="http://submit.cs.umd.edu/">submit server</a> 
+by clicking on the submit link in the column "web submission".
+
+<p>
+<img src="submit1.jpg">
+</p><p>
+
+Next, use the submit dialog to submit your puzzle.ml file directly.
+
+</p><p>
+<img src="submit2.jpg">
+</p><p>
+
+Select your file using the "Browse" button, 
+then press the "Submit project!" button.  
+You <b>do not</b> need to put it in a Jar or Zip file.
+Some students have mentioned problems 
+with using Internet Explorer, because 
+submissions being extracted in directories
+(e.g., "C:\My Documents\330\puzzle.ml") where
+the submit server could not find them.  The
+problems went away when switching to the 
+Mozilla Firefox browser.
+
+</p><p>
+</p></li><li>
+
+</li><li>
+Submit directly by executing a Java program on a computer
+with Java and network access.  Use the submit.jar file 
+from the archive <a href="http://www.cs.umd.edu/class/spring2009/cmsc330/p3/p3.zip">p3.zip</a>, 
+To submit, go to the directory containing your project, then either
+execute submit.rb or type the following command directly:
+<p> 
+
+</p><center>
+<tt>
+java -jar submit.jar
+</tt>
+</center>
+<p>
+
+You will be asked to enter your class account and password, then
+all files in the directory (and its subdirectories) will be
+put in a jar file and submitted to the submit server.  
+If your submission is successful you will see the message:
+</p><p> 
+
+</p><center>
+<tt>
+Successful submission #<submission_number> received for project 3
+</submission_number></tt>
+</center>
+<p>
+
+</p></li></ul>
+
+<h2>Hints and Tips</h2>
+
+<li>
+Be sure you have read and understand the project grading policies in
+the course syllabus.  Do this well in advance of the project due date.
+
+
+<h2>Academic Integrity</h2>
+
+<p>
+The Campus Senate has adopted a policy asking students to include the
+following statement on each assignment in every course: "I pledge on
+my honor that I have not given or received any unauthorized assistance
+on this assignment."  Consequently your program is requested to
+contain this pledge in a comment near the top.
+
+</p><p>
+Please <b>carefully read</b> the academic honesty section of the
+course syllabus.  <b>Any evidence</b> of impermissible cooperation on
+projects, use of disallowed materials or resources, or unauthorized
+use of computer accounts, <b>will be submitted</b> to the Student
+Honor Council, which could result in an XF for the course, or
+suspension or expulsion from the University.  Be sure you understand
+what you are and what you are not permitted to do in regards to
+academic integrity when it comes to project assignments.  These
+policies apply to all students, and the Student Honor Council does not
+consider lack of knowledge of the policies to be a defense for
+violating them.  Full information is found in the course
+syllabus---please review it at this time.
+
+
+</p></li></td>
+</tr></tbody></table>
+
+</body></html>

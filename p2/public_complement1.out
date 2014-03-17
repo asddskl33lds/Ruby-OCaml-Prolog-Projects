@@ -1,0 +1,29 @@
+% Start 8
+% Final { 8 9 11 }
+% States { 8 9 10 11 }
+% Alphabet { a }
+% Transitions {
+%  (8 a 9)
+%  (9 a 10)
+%  (10 a 11)
+%  (11 a 11)
+% }
+FiniteAutomaton
+  4 states
+  3 final states
+  4 transitions
+    4 states with 1 transitions
+% Start 18
+% Final { 19 }
+% States { 18 19 20 }
+% Alphabet { a }
+% Transitions {
+%  (18 a 19)
+%  (19 a 20)
+%  (20 a 19)
+% }
+FiniteAutomaton
+  3 states
+  1 final states
+  3 transitions
+    3 states with 1 transitions

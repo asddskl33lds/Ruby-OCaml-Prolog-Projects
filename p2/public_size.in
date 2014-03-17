@@ -1,0 +1,7 @@
+a PRINT b PRINT . PRINT SIZE 
+c d | PRINT SIZE 
+e * PRINT SIZE 
+a b c d | . * . PRINT SIZE
+E PRINT SIZE
+a E | PRINT SIZE
+DONE

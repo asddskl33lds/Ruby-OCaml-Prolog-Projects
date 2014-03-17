@@ -1,0 +1,7 @@
+a b . PRINT STAT
+c d | PRINT STAT
+e * PRINT STAT
+a b c d | . * . PRINT STAT
+E PRINT STAT
+a E | PRINT STAT
+DONE

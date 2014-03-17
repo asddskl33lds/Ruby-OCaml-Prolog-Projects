@@ -1,0 +1,11 @@
+# Submit server .submit file for
+#  Course CMSC330
+#  Project 4: Regular Expression Parser
+
+courseName=CMSC330
+semester=201308
+projectNumber=4
+courseKey=8cb8ecdfc4e34d52
+authentication.type=ldap
+baseURL=https://submit.cs.umd.edu:443
+submitURL=https://submit.cs.umd.edu:443/eclipse/SubmitProjectViaEclipse

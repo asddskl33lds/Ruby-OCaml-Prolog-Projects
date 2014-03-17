@@ -1,0 +1,54 @@
+% Start 2
+% Final { 3 }
+% States { 2 3 }
+% Alphabet { a }
+% Transitions {
+%  (2 a 3)
+% }
+FiniteAutomaton
+  2 states
+  1 final states
+  1 transitions
+    1 states with 0 transitions
+    1 states with 1 transitions
+% Start 10
+% Final { 11 12 }
+% States { 10 11 12 }
+% Alphabet { a b }
+% Transitions {
+%  (10 a 11)
+%  (10 b 12)
+% }
+FiniteAutomaton
+  3 states
+  2 final states
+  2 transitions
+    2 states with 0 transitions
+    1 states with 2 transitions
+% Start 17
+% Final { 19 }
+% States { 17 18 19 }
+% Alphabet { a }
+% Transitions {
+%  (17 a 18)
+%  (18 a 19)
+% }
+FiniteAutomaton
+  3 states
+  1 final states
+  2 transitions
+    1 states with 0 transitions
+    2 states with 1 transitions
+% Start 24
+% Final { 24 25 }
+% States { 24 25 }
+% Alphabet { a }
+% Transitions {
+%  (24 a 25)
+%  (25 a 25)
+% }
+FiniteAutomaton
+  2 states
+  2 final states
+  2 transitions
+    2 states with 1 transitions

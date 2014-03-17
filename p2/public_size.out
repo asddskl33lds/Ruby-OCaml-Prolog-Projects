@@ -1,0 +1,91 @@
+% Start 0
+% Final { 1 }
+% States { 0 1 }
+% Alphabet { a }
+% Transitions {
+%  (0 a 1)
+% }
+% Start 2
+% Final { 3 }
+% States { 2 3 }
+% Alphabet { b }
+% Transitions {
+%  (2 b 3)
+% }
+% Start 0
+% Final { 3 }
+% States { 0 1 2 3 }
+% Alphabet { a b }
+% Transitions {
+%  (0 a 1)
+%  (1  2)
+%  (2 b 3)
+% }
+4
+% Start 8
+% Final { 9 }
+% States { 4 5 6 7 8 9 }
+% Alphabet { c d }
+% Transitions {
+%  (4 c 5)
+%  (5  9)
+%  (6 d 7)
+%  (7  9)
+%  (8  4)
+%  (8  6)
+% }
+6
+% Start 12
+% Final { 13 }
+% States { 10 11 12 13 }
+% Alphabet { e }
+% Transitions {
+%  (10 e 11)
+%  (11  13)
+%  (12  10)
+%  (12  13)
+%  (13  12)
+% }
+4
+% Start 14
+% Final { 25 }
+% States { 14 15 16 17 18 19 20 21 22 23 24 25 }
+% Alphabet { a b c d }
+% Transitions {
+%  (14 a 15)
+%  (15  24)
+%  (16 b 17)
+%  (17  22)
+%  (18 c 19)
+%  (19  23)
+%  (20 d 21)
+%  (21  23)
+%  (22  18)
+%  (22  20)
+%  (23  25)
+%  (24  16)
+%  (24  25)
+%  (25  24)
+% }
+12
+% Start 26
+% Final { 27 }
+% States { 26 27 }
+% Alphabet { }
+% Transitions {
+%  (26  27)
+% }
+2
+% Start 32
+% Final { 33 }
+% States { 28 29 30 31 32 33 }
+% Alphabet { a }
+% Transitions {
+%  (28 a 29)
+%  (29  33)
+%  (30  31)
+%  (31  33)
+%  (32  28)
+%  (32  30)
+% }
+6

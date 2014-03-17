@@ -1,0 +1,83 @@
+% Start 4
+% Final { 6 }
+% States { 4 5 6 }
+% Alphabet { a b }
+% Transitions {
+%  (4 a 5)
+%  (5 b 6)
+% }
+FiniteAutomaton
+  3 states
+  1 final states
+  2 transitions
+    1 states with 0 transitions
+    2 states with 1 transitions
+% Start 13
+% Final { 14 15 }
+% States { 13 14 15 }
+% Alphabet { c d }
+% Transitions {
+%  (13 c 14)
+%  (13 d 15)
+% }
+FiniteAutomaton
+  3 states
+  2 final states
+  2 transitions
+    2 states with 0 transitions
+    1 states with 2 transitions
+% Start 20
+% Final { 20 21 }
+% States { 20 21 }
+% Alphabet { e }
+% Transitions {
+%  (20 e 21)
+%  (21 e 21)
+% }
+FiniteAutomaton
+  2 states
+  2 final states
+  2 transitions
+    2 states with 1 transitions
+% Start 34
+% Final { 35 37 38 }
+% States { 34 35 36 37 38 }
+% Alphabet { a b c d }
+% Transitions {
+%  (34 a 35)
+%  (35 b 36)
+%  (36 c 37)
+%  (36 d 38)
+%  (37 b 36)
+%  (38 b 36)
+% }
+FiniteAutomaton
+  5 states
+  3 final states
+  6 transitions
+    4 states with 1 transitions
+    1 states with 2 transitions
+% Start 41
+% Final { 41 }
+% States { 41 }
+% Alphabet { }
+% Transitions {
+% }
+FiniteAutomaton
+  1 states
+  1 final states
+  0 transitions
+    1 states with 0 transitions
+% Start 48
+% Final { 48 49 }
+% States { 48 49 }
+% Alphabet { a }
+% Transitions {
+%  (48 a 49)
+% }
+FiniteAutomaton
+  2 states
+  2 final states
+  1 transitions
+    1 states with 0 transitions
+    1 states with 1 transitions

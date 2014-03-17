@@ -1,0 +1,3 @@
+a a a | . DFA PRINT STAT "" "a" "aa" "aaa" "aaaa" "aaaaa"
+a a . * DFA PRINT STAT "" "a" "aa" "aaa" "aaaa" "aaaaa"
+DONE
